@@ -23,3 +23,11 @@ CREATE TABLE carrinhos ( carrinho_id INT AUTO_INCREMENT PRIMARY KEY, cliente_id 
 CREATE TABLE avaliacoes ( avaliacao_id INT AUTO_INCREMENT PRIMARY KEY, produto_id INT, cliente_id INT, nota INT CHECK (nota >= 1 AND nota <= 5), comentario TEXT, data_avaliacao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (produto_id) REFERENCES produtos(produto_id), FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id) );
 
 CREATE TABLE favoritos ( favorito_id INT AUTO_INCREMENT PRIMARY KEY, cliente_id INT, produto_id INT, data_adicao TIMESTAMP DEFAULT CURRENT_TIMESTAMP, FOREIGN KEY (cliente_id) REFERENCES clientes(cliente_id), FOREIGN KEY (produto_id) REFERENCES produtos(produto_id) );
+
+
+python -m pip install flask
+pip install Flask Flask-SQLAlchemy
+pip install Flask-SQLAlchemy mysql-connector-python
+pip install Flask Flask-SQLAlchemy Flask-Admin Flask-Migrate pymysql
+python -m flask run
+python app.py

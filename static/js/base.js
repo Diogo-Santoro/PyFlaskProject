@@ -92,5 +92,7 @@ document.addEventListener('DOMContentLoaded', function () {
     setupMenuToggle();
     setupFormConfirmation('formEditarCategoria', 'confirmarEdicao'); // Confirmação para editar categoria
     setupFormConfirmation('formCadastrarCategoria', 'confirmarCadastro'); // Confirmação para cadastrar categoria
+    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastro'); // Confirmação para cadastrar produto
+    setupFormConfirmation('formEditarProduto', 'confirmarEdicao');
     setupAutoHideAlert(); // Ocultar alertas automaticamente
 });

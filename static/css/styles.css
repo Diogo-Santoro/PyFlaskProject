@@ -1,0 +1,102 @@
+/* Estilos gerais */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Menu lateral fixo */
+#sidebarMenu {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;  /* Cor escura para o menu */
+    color: white;
+    position: fixed;
+    top: 0;
+    left: 0;
+    transform: translateX(-250px); /* Menu oculto por padrão */
+    transition: transform 0.3s ease;
+}
+
+/* Conteúdo principal */
+#contentArea {
+    margin-left: 0;
+    padding: 40px 20px;
+    min-height: 100vh;
+    background-color: #f8f9fa;
+    transition: margin-left 0.3s ease;
+}
+
+/* Ícone do botão de hambúrguer */
+.menu-toggle {
+    position: fixed;
+    top: 20px;
+    left: 20px;
+    cursor: pointer;
+    z-index: 100;
+}
+
+.menu-toggle img {
+    width: 30px;
+}
+
+/* Botões - cores iguais ao menu */
+.btn-primary {
+    background-color: #343a40; /* Cor igual ao menu lateral */
+    border-color: #343a40;
+    color: white;
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #23272b; /* Cor mais escura no hover */
+    border-color: #23272b;
+    color: white;
+}
+
+/* Links e ícones no menu lateral */
+.nav-link {
+    color: #ffffff !important; /* Força os links no menu a serem brancos */
+}
+
+.nav-link:hover {
+    color: #cccccc !important; /* Cor dos links no hover */
+}
+
+.nav-pills .nav-link.active {
+    background-color: #0069d9; /* Cor do link ativo */
+}
+
+.nav-pills .nav-link {
+    border-radius: 0.25rem;
+    color: #ffffff !important;
+}
+
+/* Ajuste de cor para ícones no menu */
+.nav-link i {
+    color: #ffffff !important; /* Garante que os ícones no menu lateral sejam brancos */
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 767px) {
+    #sidebarMenu {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+
+    #contentArea {
+        margin-left: 0;
+    }
+}
+
+/* Botões - cor personalizada */
+.btn-primary {
+    background-color: #343a40 !important; /* Cor igual ao menu lateral */
+    border-color: #343a40 !important;     /* Cor da borda igual ao menu */
+    color: white !important;              /* Cor do texto branca */
+}
+
+.btn-primary:hover, .btn-primary:focus {
+    background-color: #23272b !important; /* Cor mais escura no hover */
+    border-color: #23272b !important;
+    color: white !important;
+}

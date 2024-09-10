@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <h1>Listagem de Categorias</h1>
+
+    <!-- Botão para cadastrar nova categoria -->
+    <div class="mb-3 text-end">
+        <a href="{{ url_for('categoria.cadastrar_categoria') }}" class="btn btn-primary">Cadastrar Nova Categoria</a>
+    </div>
+
+    <!-- Tabela de categorias -->
+    <table class="table table-bordered table-hover">
+        <thead class="table-dark">
+            <tr>
+                <th>ID</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th class="text-center">Ações</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for categoria in categorias %}
+            <tr>
+                <td>{{ categoria.categoria_id }}</td>
+                <td>{{ categoria.nome }}</td>
+                <td>{{ categoria.descricao }}</td>
+                <td class="text-center">
+                    <!-- Botões de ação (Editar e Excluir) -->
+                    <a href="{{ url_for('categoria.editar_categoria', categoria_id=categoria.categoria_id) }}" class="btn btn-warning btn-sm">Editar</a>
+                    <form action="{{ url_for('categoria.excluir_categoria', categoria_id=categoria.categoria_id) }}" method="POST" style="display:inline;">
+                        <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                    </form>
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="4" class="text-center">Nenhuma categoria cadastrada.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

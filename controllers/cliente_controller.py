@@ -1,44 +1,44 @@
-from flask import Blueprint, render_template, request, redirect, url_for
-from models import db
-from models.Cliente import Cliente
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+from models import Cliente, db
 
 cliente_bp = Blueprint('cliente', __name__)
 
-# Listar clientes
 @cliente_bp.route('/clientes')
 def listar_clientes():
     clientes = Cliente.query.all()
-    return render_template('listar_clientes.html', clientes=clientes)
+    return render_template('cliente/listar_clientes.html', clientes=clientes)
 
-# Cadastrar novo cliente
-@cliente_bp.route('/clientes/novo', methods=['GET', 'POST'])
+@cliente_bp.route('/clientes/cadastrar', methods=['GET', 'POST'])
 def cadastrar_cliente():
     if request.method == 'POST':
         nome = request.form['nome']
         email = request.form['email']
         telefone = request.form['telefone']
-        cliente = Cliente(nome=nome, email=email, telefone=telefone)
-        db.session.add(cliente)
+        novo_cliente = Cliente(nome=nome, email=email, telefone=telefone)
+        db.session.add(novo_cliente)
         db.session.commit()
-        return redirect(url_for('cliente.listar_clientes'))
-    return render_template('cadastrar_cliente.html')
 
-# Editar cliente
-@cliente_bp.route('/clientes/<int:id>/editar', methods=['GET', 'POST'])
-def editar_cliente(id):
-    cliente = Cliente.query.get_or_404(id)
+        flash('Cliente cadastrado com sucesso!', 'success')
+        return redirect(url_for('cliente.listar_clientes'))
+    return render_template('cliente/cadastrar_cliente.html')
+
+@cliente_bp.route('/clientes/editar/<int:cliente_id>', methods=['GET', 'POST'])
+def editar_cliente(cliente_id):
+    cliente = Cliente.query.get_or_404(cliente_id)
     if request.method == 'POST':
         cliente.nome = request.form['nome']
         cliente.email = request.form['email']
         cliente.telefone = request.form['telefone']
         db.session.commit()
-        return redirect(url_for('cliente.listar_clientes'))
-    return render_template('editar_cliente.html', cliente=cliente)
 
-# Excluir cliente
-@cliente_bp.route('/clientes/<int:id>/excluir', methods=['POST'])
-def excluir_cliente(id):
-    cliente = Cliente.query.get_or_404(id)
+        flash('Cliente editado com sucesso!', 'success')
+        return redirect(url_for('cliente.listar_clientes'))
+    return render_template('cliente/editar_cliente.html', cliente=cliente)
+
+@cliente_bp.route('/clientes/excluir/<int:cliente_id>', methods=['POST'])
+def excluir_cliente(cliente_id):
+    cliente = Cliente.query.get_or_404(cliente_id)
     db.session.delete(cliente)
     db.session.commit()
+    flash('Cliente excluído com sucesso!', 'success')
     return redirect(url_for('cliente.listar_clientes'))

@@ -1,5 +1,6 @@
 College project
-
+pip install pymysql
+pip install flask
 
 SQL:
 

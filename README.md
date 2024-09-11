@@ -1,6 +1,7 @@
 College project
 pip install pymysql
 pip install flask
+pip install flask-sqlalchemy
 
 SQL:
 

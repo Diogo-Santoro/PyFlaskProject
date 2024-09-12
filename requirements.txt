@@ -1,0 +1,9 @@
+Flask==2.1.1
+Flask-SQLAlchemy==2.5.1
+Werkzeug==2.1.1
+PyMySQL==1.0.2  # Se for usar MySQL
+SQLAlchemy==1.4.36
+Jinja2==3.0.3
+cryptography==36.0.1  # Para segurança e hash de senhas
+Flask-WTF==1.0.0  # Caso esteja usando formulários
+gunicorn==20.1.0  # Para rodar no Render.com

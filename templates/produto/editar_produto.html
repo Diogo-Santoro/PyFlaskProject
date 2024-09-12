@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Produto - Sistema de E-commerce{% endblock %}
+
+{% block content %}
+    <div class="container mt-5">
+        <h1>Editar Produto</h1>
+
+        <!-- Formulário de Edição -->
+        <form id="editForm" method="POST" action="{{ url_for('produto.editar_produto', id=produto.produto_id) }}">
+            <div class="mb-3">
+                <label for="nome" class="form-label">Nome do Produto</label>
+                <input type="text" class="form-control" id="nome" name="nome" value="{{ produto.nome }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="descricao" class="form-label">Descrição</label>
+                <textarea class="form-control" id="descricao" name="descricao" required>{{ produto.descricao }}</textarea>
+            </div>
+            <div class="mb-3">
+                <label for="preco" class="form-label">Preço</label>
+                <input type="number" class="form-control" id="preco" name="preco" step="0.01" value="{{ produto.preco }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="estoque" class="form-label">Estoque</label>
+                <input type="number" class="form-control" id="estoque" name="estoque" value="{{ produto.estoque }}" required>
+            </div>
+            <div class="mb-3">
+                <label for="categoria_id" class="form-label">Categoria</label>
+                <select id="categoria_id" name="categoria_id" class="form-select" required>
+                    {% for categoria in categorias %}
+                        <option value="{{ categoria.categoria_id }}" {% if categoria.categoria_id == produto.categoria_id %}selected{% endif %}>
+                            {{ categoria.nome }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmEditModal">Salvar Alterações</button>
+        </form>
+
+        <!-- Modal de Confirmação de Edição -->
+        <div class="modal fade" id="confirmEditModal" tabindex="-1" aria-labelledby="confirmEditLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmEditLabel">Confirmar Edição</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza de que deseja salvar as alterações deste produto?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" form="editForm" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Botão Voltar -->
+        <div class="mt-3">
+            <a href="{{ url_for('produto.listar_produtos') }}" class="btn btn-secondary">Voltar</a>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Cadastrar Produto - Sistema de E-commerce{% endblock %}
+
+{% block content %}
+    <h1>Cadastrar Novo Produto</h1>
+
+    <!-- Formulário de Cadastro de Produto -->
+    <form id="formCadastrarProduto" method="POST" action="{{ url_for('produto.cadastrar_produto') }}">
+        <div class="mb-3">
+            <label for="nome" class="form-label">Nome do Produto</label>
+            <input type="text" class="form-control" id="nome" name="nome" required>
+        </div>
+        <div class="mb-3">
+            <label for="descricao" class="form-label">Descrição</label>
+            <textarea class="form-control" id="descricao" name="descricao" required></textarea>
+        </div>
+        <div class="mb-3">
+            <label for="preco" class="form-label">Preço</label>
+            <input type="number" class="form-control" id="preco" name="preco" step="0.01" required>
+        </div>
+        <div class="mb-3">
+            <label for="estoque" class="form-label">Estoque</label>
+            <input type="number" class="form-control" id="estoque" name="estoque" required>
+        </div>
+        <div class="mb-3">
+            <label for="categoria_id" class="form-label">Categoria</label>
+            <select class="form-select" id="categoria_id" name="categoria_id" required>
+                <option value="">Selecione uma categoria</option>
+                {% for categoria in categorias %}
+                    <option value="{{ categoria.categoria_id }}">{{ categoria.nome }}</option>
+                {% endfor %}
+            </select>
+        </div>
+
+        <!-- Botão para abrir o modal de confirmação -->
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Cadastrar</button>
+    </form>
+
+    <!-- Botão Voltar -->
+    <div class="mt-3">
+        <a href="{{ url_for('produto.listar_produtos') }}" class="btn btn-secondary">Voltar</a>
+    </div>
+
+    <!-- Modal de Confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Cadastro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza de que deseja cadastrar este produto?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <!-- Botão que submete o formulário ao confirmar -->
+                    <button type="button" class="btn btn-primary" id="confirmarCadastroProduto">Confirmar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

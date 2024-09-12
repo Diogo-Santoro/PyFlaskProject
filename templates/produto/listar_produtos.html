@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+{% block title %}Lista de Produtos - Sistema de E-commerce{% endblock %}
+
+{% block content %}
+<div class="container-fluid py-4">
+    <div class="row">
+        <div class="col-12">
+            <h1>Lista de Produtos</h1>
+            <p>Aqui estão listados os produtos cadastrados no sistema.</p>
+
+            <!-- Botão para cadastrar novo produto -->
+            <a href="{{ url_for('produto.cadastrar_produto') }}" class="btn btn-primary mb-3">Cadastrar Novo Produto</a>
+
+            <!-- Tabela de produtos -->
+            <table class="table table-bordered table-hover">
+                <thead class="table-dark">
+                    <tr>
+                        <th>Nome</th>
+                        <th>Descrição</th>
+                        <th>Preço</th>
+                        <th>Estoque</th>
+                        <th>Categoria</th>  
+                        <th class="text-center">Ações</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for produto in produtos %}
+                    <tr>
+                        <td>{{ produto.nome }}</td>
+                        <td>{{ produto.descricao }}</td>
+                        <td>{{ produto.preco }}</td>
+                        <td class="text-center">{{ produto.estoque }}</td>
+                        <td>{{ produto.categoria.nome }}</td>
+                        <td class="text-center">
+                            <!-- Botões de ação (Editar e Excluir) -->
+                            <a href="{{ url_for('produto.editar_produto', id=produto.produto_id) }}" class="btn btn-warning btn-sm">Editar</a>
+                            <form action="{{ url_for('produto.excluir_produto', id=produto.produto_id) }}" method="POST" style="display:inline;">
+                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
+                            </form>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="6" class="text-center">Nenhum produto cadastrado.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,4 +1,4 @@
-from . import db
+from models import db  # Importa o db da inicialização em models/__init__.py
 
 class Cliente(db.Model):
     __tablename__ = 'clientes'
@@ -6,9 +6,9 @@ class Cliente(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     email = db.Column(db.String(100), nullable=False, unique=True)
     senha = db.Column(db.String(255), nullable=False)
-    endereco = db.Column(db.String(255))
-    cidade = db.Column(db.String(100))
-    estado = db.Column(db.String(100))
-    cep = db.Column(db.String(20))
-    telefone = db.Column(db.String(20))
-    data_cadastro = db.Column(db.TIMESTAMP, server_default=db.func.current_timestamp())
+    endereco = db.Column(db.String(255), nullable=False)
+    cidade = db.Column(db.String(100), nullable=False)
+    estado = db.Column(db.String(100), nullable=False)
+    cep = db.Column(db.String(20), nullable=False)
+    telefone = db.Column(db.String(20), nullable=False)
+    data_cadastro = db.Column(db.DateTime, default=db.func.current_timestamp())

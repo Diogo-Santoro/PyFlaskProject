@@ -1,5 +1,7 @@
+import os
+
 class Config:
-    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:1234@localhost/ecommerce_db'
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')  # Use SQLite
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    import os
-    SECRET_KEY = os.urandom(24)  # Defina uma chave secreta aqui
+    SECRET_KEY = os.urandom(24)

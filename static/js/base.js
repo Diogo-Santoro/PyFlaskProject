@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', function () {
 
-    // Função para alternar o estado do menu lateral
+    // Função para alternar o estado do menu lateral (mantendo como estava)
     function setupMenuToggle() {
         const menuToggle = document.getElementById('menuToggle');
         const sidebarMenu = document.getElementById('sidebarMenu');
@@ -86,7 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setupMenuToggle();
-    setupFormConfirmation('formCadastrarCategoria', 'confirmarCadastro'); // Confirmação para cadastrar categoria
-    setupFormConfirmation('formCadastrarCliente', 'confirmarCadastro'); // Confirmação para cadastrar cliente
+    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastroProduto'); // Confirmação para cadastrar produto
     setupAutoHideAlert(); // Ocultar alertas automaticamente
 });

@@ -1,4 +1,5 @@
-from models import db
+from . import db
+from .Categoria import Categoria  # Certifique-se de importar o modelo Categoria corretamente
 
 class Produto(db.Model):
     __tablename__ = 'produtos'
@@ -10,4 +11,4 @@ class Produto(db.Model):
     categoria_id = db.Column(db.Integer, db.ForeignKey('categorias.categoria_id'), nullable=False)
 
     # Relacionamento com Categoria
-    categoria = db.relationship('Categoria', backref=db.backref('produtos', lazy=True))
+    categoria = db.relationship('Categoria', backref='produtos')

@@ -6,19 +6,21 @@
 <div class="container-fluid py-4">
     <div class="row">
         <div class="col-12">
-            <h1>Cadastrar Nova Categoria</h1>
-            <p>Preencha os detalhes da nova categoria abaixo.</p>
+            <h1>Cadastrar Categoria</h1>
+            <p>Preencha os detalhes abaixo para cadastrar uma nova categoria.</p>
 
-            <!-- Formulário para cadastrar nova categoria -->
-            <form method="POST" id="formCadastrarCategoria" action="{{ url_for('categoria.cadastrar_categoria') }}">
+            <!-- Formulário para cadastrar categoria -->
+            <form id="formCadastrarCategoria" method="POST" action="{{ url_for('categoria.cadastrar_categoria') }}">
                 <div class="mb-3">
                     <label for="nome" class="form-label">Nome da Categoria</label>
                     <input type="text" class="form-control" id="nome" name="nome" required>
                 </div>
                 <div class="mb-3">
                     <label for="descricao" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="descricao" name="descricao"></textarea>
+                    <textarea class="form-control" id="descricao" name="descricao" rows="3" required></textarea>
                 </div>
+
+                <!-- Botão para abrir o modal de confirmação -->
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Cadastrar Categoria</button>
             </form>
 
@@ -39,11 +41,11 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-                Tem certeza de que deseja cadastrar esta nova categoria?
+                Tem certeza de que deseja cadastrar esta categoria?
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <!-- O botão de confirmação chama a função no base.js -->
+                <!-- Botão que submete o formulário ao confirmar -->
                 <button type="button" class="btn btn-primary" id="confirmarCadastro">Confirmar</button>
             </div>
         </div>

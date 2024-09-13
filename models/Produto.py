@@ -1,5 +1,4 @@
-from . import db  # Importa o db do __init__.py
-from .Categoria import Categoria  # Certifique-se de importar o modelo de Categoria
+from models import db  # Importa o db da inicialização em models/__init__.py
 
 class Produto(db.Model):
     __tablename__ = 'produtos'

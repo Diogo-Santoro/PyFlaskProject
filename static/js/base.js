@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    
+
     // Função para alternar o estado do menu lateral
     function setupMenuToggle() {
         const menuToggle = document.getElementById('menuToggle');
@@ -51,13 +51,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             }
 
-            // Inicializa o estado do menu ao carregar a página
             updateMenuState(false);
 
-            // Alterna o estado do menu ao clicar no ícone de hambúrguer
             menuToggle.addEventListener('click', toggleMenu);
 
-            // Previne o recarregamento da página ao clicar na rota ativa
             menuLinks.forEach(link => {
                 link.addEventListener('click', function (event) {
                     preventPageReloadOnActiveLink(link, event);
@@ -88,11 +85,8 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Inicializa as funcionalidades
     setupMenuToggle();
-    setupFormConfirmation('formEditarCategoria', 'confirmarEdicao'); // Confirmação para editar categoria
     setupFormConfirmation('formCadastrarCategoria', 'confirmarCadastro'); // Confirmação para cadastrar categoria
-    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastro'); // Confirmação para cadastrar produto
-    setupFormConfirmation('formEditarProduto', 'confirmarEdicao');
+    setupFormConfirmation('formCadastrarCliente', 'confirmarCadastro'); // Confirmação para cadastrar cliente
     setupAutoHideAlert(); // Ocultar alertas automaticamente
 });

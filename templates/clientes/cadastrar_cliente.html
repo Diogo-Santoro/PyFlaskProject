@@ -5,7 +5,7 @@
 {% block content %}
     <h1>Cadastrar Novo Cliente</h1>
 
-    <form method="POST" action="{{ url_for('cliente.cadastrar_cliente') }}">
+    <form id="formCadastrarCliente" method="POST" action="{{ url_for('cliente.cadastrar_cliente') }}">
         <div class="mb-3">
             <label for="nome" class="form-label">Nome do Cliente</label>
             <input type="text" class="form-control" id="nome" name="nome" required>
@@ -15,9 +15,55 @@
             <input type="email" class="form-control" id="email" name="email" required>
         </div>
         <div class="mb-3">
-            <label for="telefone" class="form-label">Telefone</label>
-            <input type="text" class="form-control" id="telefone" name="telefone" maxlength="11" required>
+            <label for="senha" class="form-label">Senha</label>
+            <input type="password" class="form-control" id="senha" name="senha" required>
         </div>
-        <button type="submit" class="btn btn-primary">Cadastrar</button>
+        <div class="mb-3">
+            <label for="endereco" class="form-label">Endereço</label>
+            <input type="text" class="form-control" id="endereco" name="endereco" required>
+        </div>
+        <div class="mb-3">
+            <label for="cidade" class="form-label">Cidade</label>
+            <input type="text" class="form-control" id="cidade" name="cidade" required>
+        </div>
+        <div class="mb-3">
+            <label for="estado" class="form-label">Estado</label>
+            <input type="text" class="form-control" id="estado" name="estado" required>
+        </div>
+        <div class="mb-3">
+            <label for="cep" class="form-label">CEP</label>
+            <input type="text" class="form-control" id="cep" name="cep" required>
+        </div>
+        <div class="mb-3">
+            <label for="telefone" class="form-label">Telefone</label>
+            <input type="text" class="form-control" id="telefone" name="telefone" required>
+        </div>
+        
+        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationModal">
+            Cadastrar
+        </button>
+
+        <!-- Modal de Confirmação -->
+        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="confirmationModalLabel">Confirmar Cadastro</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        Tem certeza de que deseja cadastrar este cliente?
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                        <button type="submit" id="confirmarCadastro" class="btn btn-primary">Confirmar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </form>
+    
+    <a href="{{ url_for('cliente.listar_clientes') }}" class="btn btn-secondary mt-3">Voltar</a>
+
 {% endblock %}

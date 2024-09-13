@@ -1,4 +1,6 @@
-from . import db
+from models import db
+from models.Pedido import Pedido
+from models.Produto import Produto
 
 class PedidoItem(db.Model):
     __tablename__ = 'itens_pedido'
@@ -8,6 +10,8 @@ class PedidoItem(db.Model):
     quantidade = db.Column(db.Integer, nullable=False)
     preco = db.Column(db.Numeric(10, 2), nullable=False)
 
-    # Relacionamento com pedido e produto
-    pedido = db.relationship('Pedido', backref='itens')
-    produto = db.relationship('Produto', backref='pedidos')
+    # Relacionamento com Pedido
+    pedido = db.relationship('Pedido', backref=db.backref('itens', lazy=True))
+
+    # Relacionamento com Produto
+    produto = db.relationship('Produto', backref=db.backref('itens', lazy=True))

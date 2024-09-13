@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from models import Produto, Categoria, db
+from models import db  # Certifique-se de que está importando o `db` corretamente de models/__init__.py
+from models.Produto import Produto
+from models.Categoria import Categoria
 
 produto_bp = Blueprint('produto', __name__)
 
@@ -17,10 +19,9 @@ def cadastrar_produto():
         preco = request.form['preco']
         estoque = request.form['estoque']
         categoria_id = request.form['categoria_id']
-        novo_produto = Produto(nome=nome, descricao=descricao, preco=preco, estoque=estoque, categoria_id=categoria_id)
-        db.session.add(novo_produto)
+        produto = Produto(nome=nome, descricao=descricao, preco=preco, estoque=estoque, categoria_id=categoria_id)
+        db.session.add(produto)
         db.session.commit()
-
         flash('Produto cadastrado com sucesso!', 'success')
         return redirect(url_for('produto.listar_produtos'))
     return render_template('produto/cadastrar_produto.html', categorias=categorias)
@@ -36,7 +37,6 @@ def editar_produto(id):
         produto.estoque = request.form['estoque']
         produto.categoria_id = request.form['categoria_id']
         db.session.commit()
-
         flash('Produto editado com sucesso!', 'success')
         return redirect(url_for('produto.listar_produtos'))
     return render_template('produto/editar_produto.html', produto=produto, categorias=categorias)

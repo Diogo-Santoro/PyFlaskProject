@@ -1,6 +1,4 @@
-from flask_sqlalchemy import SQLAlchemy
-
-db = SQLAlchemy()
+from models import db
 
 class Pedido(db.Model):
     __tablename__ = 'pedidos'
@@ -15,4 +13,4 @@ class Pedido(db.Model):
     cep_entrega = db.Column(db.String(20))
 
     # Relacionamento com Cliente
-    cliente = db.relationship('Cliente', backref='pedidos')
+    cliente = db.relationship('Cliente', backref=db.backref('pedidos', lazy=True))

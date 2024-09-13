@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from models import Categoria, db
+from models import db  # Certifique-se de que está importando o `db` corretamente de models/__init__.py
+from models.Categoria import Categoria  # Certifique-se de que está importando o `Categoria` corretamente
 
 categoria_bp = Blueprint('categoria', __name__)
 
@@ -40,4 +41,3 @@ def excluir_categoria(categoria_id):
     db.session.commit()
     flash('Categoria excluída com sucesso!', 'success')
     return redirect(url_for('categoria.listar_categorias'))
-

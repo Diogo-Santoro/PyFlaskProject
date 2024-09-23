@@ -1,87 +1,60 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de Produtos - Sistema de E-commerce{% endblock %}
+{% block title %}Produtos{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <h1>Lista de Produtos</h1>
-            <p>Aqui estão listados os produtos cadastrados no sistema.</p>
+<h2>Listar Produtos</h2>
 
-            <!-- Exibe mensagens flash -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-                {% if messages %}
-                    <div class="alert alert-{{ messages[0][0] }} alert-dismissible fade show" role="alert">
-                        {{ messages[0][1] }}
-                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-                    </div>
-                {% endif %}
-            {% endwith %}
+<table class="table">
+    <thead>
+        <tr>
+            <th>Nome</th>
+            <th>Descrição</th>
+            <th>Preço</th>
+            <th>Estoque</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for produto in produtos %}
+        <tr>
+            <td>{{ produto.nome }}</td>
+            <td>{{ produto.descricao }}</td>
+            <td>{{ produto.preco }}</td>
+            <td>{{ produto.estoque }}</td>
+            <td>
+                <a href="{{ url_for('produto.editar_produto', id=produto.produto_id) }}" class="btn btn-warning btn-sm">Editar</a>
+                
+                <!-- Botão para abrir o modal de exclusão -->
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ produto.produto_id }}">
+                    Excluir
+                </button>
 
-            <!-- Botão para cadastrar novo produto -->
-            <a href="{{ url_for('produto.cadastrar_produto') }}" class="btn btn-primary mb-3">Cadastrar Novo Produto</a>
-
-            <!-- Tabela de produtos -->
-            <table class="table table-bordered table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>Nome</th>
-                        <th>Descrição</th>
-                        <th>Preço</th>
-                        <th>Estoque</th>
-                        <th>Categoria</th>  
-                        <th class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for produto in produtos %}
-                    <tr>
-                        <td>{{ produto.nome }}</td>
-                        <td>{{ produto.descricao }}</td>
-                        <td>{{ produto.preco }}</td>
-                        <td class="text-center">{{ produto.estoque }}</td>
-                        <td>{{ produto.categoria.nome }}</td>
-                        <td class="text-center">
-                            <!-- Botões de ação (Editar e Excluir) -->
-                            <a href="{{ url_for('produto.editar_produto', id=produto.produto_id) }}" class="btn btn-warning btn-sm">Editar</a>
-
-                            <!-- Botão para abrir o modal de exclusão -->
-                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmExcluirModal{{ produto.produto_id }}">
-                                Excluir
-                            </button>
-
-                            <!-- Modal de Confirmação de Exclusão -->
-                            <div class="modal fade" id="confirmExcluirModal{{ produto.produto_id }}" tabindex="-1" aria-labelledby="confirmExcluirModalLabel{{ produto.produto_id }}" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-header">
-                                            <h5 class="modal-title" id="confirmExcluirModalLabel{{ produto.produto_id }}">Confirmar Exclusão</h5>
-                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                        </div>
-                                        <div class="modal-body">
-                                            Tem certeza de que deseja excluir o produto "{{ produto.nome }}"?
-                                        </div>
-                                        <div class="modal-footer">
-                                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                                            <!-- Formulário para excluir o produto -->
-                                            <form action="{{ url_for('produto.excluir_produto', id=produto.produto_id) }}" method="POST" style="display:inline;">
-                                                <button type="submit" class="btn btn-danger">Excluir</button>
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
+                <!-- Modal de confirmação de exclusão -->
+                <div class="modal fade" id="confirmDeleteModal{{ produto.produto_id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ produto.produto_id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ produto.produto_id }}">Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="6" class="text-center">Nenhum produto cadastrado.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir o produto "{{ produto.nome }}"?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="{{ url_for('produto.excluir_produto', id=produto.produto_id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('produto.cadastrar_produto') }}" class="btn btn-primary">Novo Produto</a>
 {% endblock %}

@@ -17,7 +17,7 @@ def cadastrar_categoria():
         nova_categoria = Categoria(nome=nome, descricao=descricao)
         db.session.add(nova_categoria)
         db.session.commit()
-        flash('Categoria cadastrada com sucesso!', 'success')
+        flash('Categoria cadastrada com sucesso!', 'success')  # Mensagem flash de sucesso
         return redirect(url_for('categoria.listar_categorias'))
     return render_template('categoria/cadastrar_categoria.html')
 
@@ -28,7 +28,7 @@ def editar_categoria(categoria_id):
         categoria.nome = request.form['nome']
         categoria.descricao = request.form['descricao']
         db.session.commit()
-        flash('Categoria editada com sucesso!', 'success')
+        flash('Categoria editada com sucesso!', 'success')  # Mensagem flash de sucesso
         return redirect(url_for('categoria.listar_categorias'))
     return render_template('categoria/editar_categoria.html', categoria=categoria)
 
@@ -37,5 +37,5 @@ def excluir_categoria(categoria_id):
     categoria = db.session.query(Categoria).get_or_404(categoria_id)
     db.session.delete(categoria)
     db.session.commit()
-    flash('Categoria excluída com sucesso!', 'success')
+    flash('Categoria excluída com sucesso!', 'success')  # Mensagem flash de sucesso
     return redirect(url_for('categoria.listar_categorias'))

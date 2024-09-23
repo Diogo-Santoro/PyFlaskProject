@@ -1,53 +1,58 @@
 {% extends "base.html" %}
 
-{% block title %}Lista de Pedidos - Sistema de E-commerce{% endblock %}
+{% block title %}Listar Pedidos{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <h1>Lista de Pedidos</h1>
-            <p>Aqui estão listados os pedidos realizados no sistema.</p>
+<h2>Listar Pedidos</h2>
 
-            <!-- Botão para cadastrar novo pedido -->
-            <a href="{{ url_for('pedido.cadastrar_pedido') }}" class="btn btn-primary mb-3">Cadastrar Novo Pedido</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID do Pedido</th>
+            <th>Cliente</th>
+            <th>Total</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pedido in pedidos %}
+        <tr>
+            <td>{{ pedido.pedido_id }}</td>
+            <td>{{ pedido.cliente.nome }}</td>
+            <td>{{ pedido.total }}</td>
+            <td>
+                <a href="{{ url_for('pedido.editar_pedido', id=pedido.pedido_id) }}" class="btn btn-warning btn-sm">Editar</a>
+                
+                <!-- Botão para abrir o modal de exclusão -->
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ pedido.pedido_id }}">
+                    Excluir
+                </button>
 
-            <!-- Tabela de pedidos -->
-            <table class="table table-bordered table-hover">
-                <thead class="table-dark">
-                    <tr>
-                        <th>ID</th>
-                        <th>Data</th>
-                        <th>Cliente</th>
-                        <th>Status</th>
-                        <th>Valor Total</th>
-                        <th class="text-center">Ações</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {% for pedido in pedidos %}
-                    <tr>
-                        <td>{{ pedido.pedido_id }}</td>
-                        <td>{{ pedido.data_pedido.strftime('%d/%m/%Y %H:%M') }}</td> <!-- Formata a data e a hora -->
-                        <td>{{ pedido.cliente.nome }}</td>
-                        <td>{{ pedido.status_pedido }}</td>
-                        <td>{{ pedido.total }}</td>
-                        <td class="text-center">
-                            <!-- Botões de ação (Editar e Excluir) -->
-                            <a href="{{ url_for('pedido.editar_pedido', id=pedido.pedido_id) }}" class="btn btn-warning btn-sm">Editar</a>
-                            <form action="{{ url_for('pedido.excluir_pedido', id=pedido.pedido_id) }}" method="POST" style="display:inline;">
-                                <button type="submit" class="btn btn-danger btn-sm">Excluir</button>
-                            </form>
-                        </td>
-                    </tr>
-                    {% else %}
-                    <tr>
-                        <td colspan="6" class="text-center">Nenhum pedido cadastrado.</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
-        </div>
-    </div>
-</div>
+                <!-- Modal de confirmação de exclusão -->
+                <div class="modal fade" id="confirmDeleteModal{{ pedido.pedido_id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ pedido.pedido_id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ pedido.pedido_id }}">Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir o pedido de ID "{{ pedido.pedido_id }}"?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="{{ url_for('pedido.excluir_pedido', id=pedido.pedido_id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('pedido.novo_pedido') }}" class="btn btn-primary">Novo Pedido</a>
 {% endblock %}

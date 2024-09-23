@@ -1,54 +1,46 @@
 {% extends "base.html" %}
 
-{% block title %}Editar Categoria - Sistema de E-commerce{% endblock %}
+{% block title %}Editar Categoria{% endblock %}
 
 {% block content %}
-<div class="container-fluid py-4">
-    <div class="row">
-        <div class="col-12">
-            <h1>Editar Categoria</h1>
-            <p>Altere os detalhes da categoria abaixo.</p>
+<h2>Editar Categoria</h2>
 
-            <!-- Formulário para editar categoria -->
-            <form id="formEditarCategoria" method="POST" action="{{ url_for('categoria.editar_categoria', categoria_id=categoria.categoria_id) }}">
-                <div class="mb-3">
-                    <label for="nome" class="form-label">Nome da Categoria</label>
-                    <input type="text" class="form-control" id="nome" name="nome" value="{{ categoria.nome }}" required>
+<form id="formEditarCategoria" action="{{ url_for('categoria.editar_categoria', categoria_id=categoria.categoria_id) }}" method="POST">
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome" value="{{ categoria.nome }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="descricao" class="form-label">Descrição</label>
+        <textarea class="form-control" id="descricao" name="descricao">{{ categoria.descricao }}</textarea>
+    </div>
+
+    <!-- Botão para abrir o modal de confirmação -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+        Salvar
+    </button>
+
+    <!-- Modal de confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Edição</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="mb-3">
-                    <label for="descricao" class="form-label">Descrição</label>
-                    <textarea class="form-control" id="descricao" name="descricao" rows="3" required>{{ categoria.descricao }}</textarea>
+                <div class="modal-body">
+                    Tem certeza que deseja salvar as alterações desta categoria?
                 </div>
-
-                <!-- Botão para abrir o modal de confirmação -->
-                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">Salvar Alterações</button>
-            </form>
-
-            <!-- Botão para voltar à lista de categorias -->
-            <div class="mt-3">
-                <a href="{{ url_for('categoria.listar_categorias') }}" class="btn btn-secondary">Voltar</a>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarEdicaoCategoria">Confirmar</button>
+                </div>
             </div>
         </div>
     </div>
-</div>
+</form>
 
-<!-- Modal de Confirmação -->
-<div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="confirmModalLabel">Confirmar Alterações</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-            </div>
-            <div class="modal-body">
-                Tem certeza de que deseja salvar as alterações desta categoria?
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                <!-- Botão que submete o formulário ao confirmar -->
-                <button type="button" class="btn btn-primary" id="confirmarEdicao">Confirmar</button>
-            </div>
-        </div>
-    </div>
-</div>
+<!-- Botão para voltar -->
+<a href="{{ url_for('categoria.listar_categorias') }}" class="btn btn-secondary mt-3">Voltar</a>
+
 {% endblock %}

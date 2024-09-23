@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-
-    // Função para alternar o estado do menu lateral (mantendo como estava)
+    // Função para alternar o menu lateral
     function setupMenuToggle() {
         const menuToggle = document.getElementById('menuToggle');
         const sidebarMenu = document.getElementById('sidebarMenu');
@@ -9,34 +8,18 @@ document.addEventListener('DOMContentLoaded', function () {
         const menuLinks = document.querySelectorAll('#menu a');
 
         if (menuToggle && sidebarMenu && contentArea && menuIcon) {
-            let isMenuVisible = getMenuStateFromStorage();
+            let isMenuVisible = localStorage.getItem('menuVisible') === 'true';
 
-            function getMenuStateFromStorage() {
-                return localStorage.getItem('menuVisible') === 'true';
-            }
-
-            function updateMenuState(withAnimation) {
-                const transitionValue = withAnimation ? 'transform 0.3s ease, margin-left 0.3s ease' : 'none';
-                sidebarMenu.style.transition = transitionValue;
-                contentArea.style.transition = transitionValue;
-
+            function updateMenuState(animate) {
                 if (isMenuVisible) {
-                    openMenu();
+                    sidebarMenu.style.transform = 'translateX(0)';
+                    contentArea.style.marginLeft = '250px';
+                    menuIcon.style.filter = 'invert(1)';
                 } else {
-                    closeMenu();
+                    sidebarMenu.style.transform = 'translateX(-250px)';
+                    contentArea.style.marginLeft = '0';
+                    menuIcon.style.filter = 'invert(0)';
                 }
-            }
-
-            function openMenu() {
-                sidebarMenu.style.transform = 'translateX(0)';
-                contentArea.style.marginLeft = '250px';
-                menuIcon.style.filter = 'invert(1)'; // Ícone branco
-            }
-
-            function closeMenu() {
-                sidebarMenu.style.transform = 'translateX(-250px)';
-                contentArea.style.marginLeft = '0';
-                menuIcon.style.filter = 'invert(0)'; // Ícone cinza escuro
             }
 
             function toggleMenu() {
@@ -45,21 +28,17 @@ document.addEventListener('DOMContentLoaded', function () {
                 updateMenuState(true);
             }
 
-            function preventPageReloadOnActiveLink(link, event) {
-                if (link.href === window.location.href) {
-                    event.preventDefault();
-                }
-            }
-
-            updateMenuState(false);
-
             menuToggle.addEventListener('click', toggleMenu);
 
             menuLinks.forEach(link => {
                 link.addEventListener('click', function (event) {
-                    preventPageReloadOnActiveLink(link, event);
+                    if (link.href === window.location.href) {
+                        event.preventDefault();
+                    }
                 });
             });
+
+            updateMenuState(false);
         }
     }
 
@@ -85,7 +64,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
+    // Configurações de formulários com confirmação
+    setupFormConfirmation('formCadastrarCategoria', 'confirmarCadastroCategoria');
+    setupFormConfirmation('formEditarCategoria', 'confirmarEdicaoCategoria');  // Adicionado para edição
+    setupFormConfirmation('formCadastrarCliente', 'confirmarCadastroCliente');
+    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastroProduto');
+    setupFormConfirmation('formCadastrarPedido', 'confirmarCadastroPedido');
+
+    setupFormConfirmation('formEditarCategoria', 'confirmarEdicaoCategoria');
+    setupFormConfirmation('formEditarProduto', 'confirmarEdicaoProduto')
+    setupFormConfirmation('formEditarCliente','confirmarEdicaoCliente')
+
+    // Ocultar alertas automaticamente
+    setupAutoHideAlert();
+
+    // Inicializar o menu
     setupMenuToggle();
-    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastroProduto', 'confirmarEdicao'); // Confirmação para cadastrar produto
-    setupAutoHideAlert(); // Ocultar alertas automaticamente
 });

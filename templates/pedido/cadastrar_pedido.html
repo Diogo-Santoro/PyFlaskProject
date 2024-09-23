@@ -1,24 +1,50 @@
 {% extends "base.html" %}
 
-{% block title %}Cadastrar Pedido - Sistema de E-commerce{% endblock %}
+{% block title %}Cadastrar Pedido{% endblock %}
 
 {% block content %}
-    <h1>Cadastrar Novo Pedido</h1>
+<h2>Cadastrar Pedido</h2>
 
-    <form method="POST" action="{{ url_for('pedido.cadastrar_pedido') }}">
-        <div class="mb-3">
-            <label for="cliente_id" class="form-label">Cliente</label>
-            <select class="form-select" id="cliente_id" name="cliente_id" required>
-                <option value="">Selecione um cliente</option>
-                {% for cliente in clientes %}
-                    <option value="{{ cliente.cliente_id }}">{{ cliente.nome }}</option>
-                {% endfor %}
-            </select>
+<form id="formCadastrarPedido" action="{{ url_for('pedido.novo_pedido') }}" method="POST">
+    <div class="mb-3">
+        <label for="cliente_id" class="form-label">Cliente</label>
+        <select class="form-select" id="cliente_id" name="cliente_id" required>
+            {% for cliente in clientes %}
+            <option value="{{ cliente.cliente_id }}">{{ cliente.nome }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="total" class="form-label">Total</label>
+        <input type="number" step="0.01" class="form-control" id="total" name="total" required>
+    </div>
+
+    <!-- Botão para abrir o modal de confirmação -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+        Criar Pedido
+    </button>
+
+    <!-- Modal de confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Criação de Pedido</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja criar este pedido?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarCadastroPedido">Confirmar</button>
+                </div>
+            </div>
         </div>
-        <div class="mb-3">
-            <label for="total" class="form-label">Total</label>
-            <input type="number" class="form-control" id="total" name="total" required>
-        </div>
-        <button type="submit" class="btn btn-primary">Cadastrar Pedido</button>
-    </form>
+    </div>
+</form>
+
+<!-- Botão para voltar -->
+<a href="{{ url_for('pedido.listar_pedidos') }}" class="btn btn-secondary mt-3">Voltar</a>
+
 {% endblock %}

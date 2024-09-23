@@ -1,69 +1,54 @@
 {% extends "base.html" %}
 
-{% block title %}Cadastrar Cliente - Sistema de E-commerce{% endblock %}
+{% block title %}Cadastrar Cliente{% endblock %}
 
 {% block content %}
-    <h1>Cadastrar Novo Cliente</h1>
+<h2>Cadastrar Cliente</h2>
 
-    <form id="formCadastrarCliente" method="POST" action="{{ url_for('cliente.cadastrar_cliente') }}">
-        <div class="mb-3">
-            <label for="nome" class="form-label">Nome do Cliente</label>
-            <input type="text" class="form-control" id="nome" name="nome" required>
-        </div>
-        <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" name="email" required>
-        </div>
-        <div class="mb-3">
-            <label for="senha" class="form-label">Senha</label>
-            <input type="password" class="form-control" id="senha" name="senha" required>
-        </div>
-        <div class="mb-3">
-            <label for="endereco" class="form-label">Endereço</label>
-            <input type="text" class="form-control" id="endereco" name="endereco" required>
-        </div>
-        <div class="mb-3">
-            <label for="cidade" class="form-label">Cidade</label>
-            <input type="text" class="form-control" id="cidade" name="cidade" required>
-        </div>
-        <div class="mb-3">
-            <label for="estado" class="form-label">Estado</label>
-            <input type="text" class="form-control" id="estado" name="estado" required>
-        </div>
-        <div class="mb-3">
-            <label for="cep" class="form-label">CEP</label>
-            <input type="text" class="form-control" id="cep" name="cep" required>
-        </div>
-        <div class="mb-3">
-            <label for="telefone" class="form-label">Telefone</label>
-            <input type="text" class="form-control" id="telefone" name="telefone" required>
-        </div>
-        
-        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmationModal">
-            Cadastrar
-        </button>
+<form id="formCadastrarCliente" action="{{ url_for('cliente.cadastrar_cliente') }}" method="POST">
+    <div class="mb-3">
+        <label for="nome" class="form-label">Nome</label>
+        <input type="text" class="form-control" id="nome" name="nome" required>
+    </div>
+    <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input type="email" class="form-control" id="email" name="email" required>
+    </div>
+    <div class="mb-3">
+        <label for="senha" class="form-label">Senha</label>
+        <input type="password" class="form-control" id="senha" name="senha" required> <!-- Campo de senha adicionado -->
+    </div>
+    <div class="mb-3">
+        <label for="endereco" class="form-label">Endereço</label>
+        <input type="text" class="form-control" id="endereco" name="endereco">
+    </div>
 
-        <!-- Modal de Confirmação -->
-        <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="confirmationModalLabel">Confirmar Cadastro</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        Tem certeza de que deseja cadastrar este cliente?
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
-                        <button type="submit" id="confirmarCadastro" class="btn btn-primary">Confirmar</button>
-                    </div>
+    <!-- Botão para abrir o modal de confirmação -->
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#confirmModal">
+        Cadastrar
+    </button>
+
+    <!-- Modal de confirmação -->
+    <div class="modal fade" id="confirmModal" tabindex="-1" aria-labelledby="confirmModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="confirmModalLabel">Confirmar Cadastro</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    Tem certeza que deseja cadastrar este cliente?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn btn-primary" id="confirmarCadastroCliente">Confirmar</button>
                 </div>
             </div>
         </div>
+    </div>
+</form>
 
-    </form>
-    
-    <a href="{{ url_for('cliente.listar_clientes') }}" class="btn btn-secondary mt-3">Voltar</a>
+<!-- Botão para voltar -->
+<a href="{{ url_for('cliente.listar_clientes') }}" class="btn btn-secondary mt-3">Voltar</a>
 
 {% endblock %}

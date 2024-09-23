@@ -46,5 +46,5 @@ def excluir_produto(id):
     produto = db.session.query(Produto).get_or_404(id)
     db.session.delete(produto)
     db.session.commit()
-    flash('Produto excluído rado com sucesso!', 'success')
+    flash('Produto excluído com sucesso!', 'success')
     return redirect(url_for('produto.listar_produtos'))

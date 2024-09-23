@@ -86,6 +86,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
 
     setupMenuToggle();
-    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastroProduto'); // Confirmação para cadastrar produto
+    setupFormConfirmation('formCadastrarProduto', 'confirmarCadastroProduto', 'confirmarEdicao'); // Confirmação para cadastrar produto
     setupAutoHideAlert(); // Ocultar alertas automaticamente
 });

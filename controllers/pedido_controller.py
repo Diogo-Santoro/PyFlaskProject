@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, redirect, url_for
+from flask import Blueprint, render_template, request, redirect, url_for, flash
 from models.Pedido import Pedido  # Importar a classe Pedido corretamente
 from models.Cliente import Cliente  # Importar a classe Cliente corretamente
 from models.PedidoItem import PedidoItem  # Importar a classe PedidoItem corretamente
@@ -34,6 +34,7 @@ def cadastrar_pedido():
                     db.session.add(item)
 
         db.session.commit()
+        flash('Pedido cadastrado com sucesso!', 'success')
         return redirect(url_for('pedido.listar_pedidos'))
 
     return render_template('pedido/cadastrar_pedido.html', clientes=clientes, produtos=produtos)
@@ -61,6 +62,7 @@ def editar_pedido(id):
                     db.session.add(item)
 
         db.session.commit()
+        flash('Pedido editado com sucesso!', 'success')
         return redirect(url_for('pedido.listar_pedidos'))
 
     return render_template('pedido/editar_pedido.html', pedido=pedido, clientes=clientes, produtos=produtos)
@@ -72,4 +74,5 @@ def excluir_pedido(id):
         db.session.delete(item)
     db.session.delete(pedido)
     db.session.commit()
+    flash('Pedodo excluído com sucesso!', 'success')
     return redirect(url_for('pedido.listar_pedidos'))

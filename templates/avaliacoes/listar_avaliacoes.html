@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Listar Avaliações{% endblock %}
+
+{% block content %}
+<h2>Listar Avaliações</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Produto</th>
+            <th>Cliente</th>
+            <th>Nota</th>
+            <th>Comentário</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for avaliacao in avaliacoes %}
+        <tr>
+            <td>{{ avaliacao.avaliacao_id }}</td>
+            <td>{{ avaliacao.produto.nome }}</td>
+            <td>{{ avaliacao.cliente.nome }}</td>
+            <td>{{ avaliacao.nota }}</td>
+            <td>{{ avaliacao.comentario }}</td>
+            <td>
+                <a href="{{ url_for('avaliacao.editar_avaliacao', id=avaliacao.avaliacao_id) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ avaliacao.avaliacao_id }}">
+                    Excluir
+                </button>
+
+                <div class="modal fade" id="confirmDeleteModal{{ avaliacao.avaliacao_id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ avaliacao.avaliacao_id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ avaliacao.avaliacao_id }}">Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir a avaliação do produto {{ avaliacao.produto.nome }}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="{{ url_for('avaliacao.excluir_avaliacao', id=avaliacao.avaliacao_id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('avaliacao.nova_avaliacao') }}" class="btn btn-primary">Nova Avaliação</a>
+{% endblock %}

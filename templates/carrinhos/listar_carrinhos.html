@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Listar Carrinhos{% endblock %}
+
+{% block content %}
+<h2>Listar Carrinhos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Cliente</th>
+            <th>Produto</th>
+            <th>Quantidade</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for carrinho in carrinhos %}
+        <tr>
+            <td>{{ carrinho.carrinho_id }}</td>
+            <td>{{ carrinho.cliente.nome }}</td>
+            <td>{{ carrinho.produto.nome }}</td>
+            <td>{{ carrinho.quantidade }}</td>
+            <td>
+                <a href="{{ url_for('carrinho.editar_carrinho', id=carrinho.carrinho_id) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ carrinho.carrinho_id }}">
+                    Excluir
+                </button>
+
+                <div class="modal fade" id="confirmDeleteModal{{ carrinho.carrinho_id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ carrinho.carrinho_id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ carrinho.carrinho_id }}">Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir o carrinho do cliente {{ carrinho.cliente.nome }}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="{{ url_for('carrinho.excluir_carrinho', id=carrinho.carrinho_id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('carrinho.novo_carrinho') }}" class="btn btn-primary">Novo Carrinho</a>
+{% endblock %}

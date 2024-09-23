@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block title %}Editar Pagamento{% endblock %}
+
+{% block content %}
+<h2>Editar Pagamento</h2>
+
+<form action="{{ url_for('pagamento.editar_pagamento', id=pagamento.pagamento_id) }}" method="POST">
+    <div class="mb-3">
+        <label for="pedido_id" class="form-label">Pedido</label>
+        <select class="form-select" id="pedido_id" name="pedido_id" required>
+            {% for pedido in pedidos %}
+            <option value="{{ pedido.pedido_id }}" {% if pedido.pedido_id == pagamento.pedido_id %}selected{% endif %}>{{ pedido.pedido_id }}</option>
+            {% endfor %}
+        </select>
+    </div>
+    <div class="mb-3">
+        <label for="valor" class="form-label">Valor</label>
+        <input type="number" step="0.01" class="form-control" id="valor" name="valor" value="{{ pagamento.valor }}" required>
+    </div>
+    <div class="mb-3">
+        <label for="metodo_pagamento" class="form-label">Método de Pagamento</label>
+        <input type="text" class="form-control" id="metodo_pagamento" name="metodo_pagamento" value="{{ pagamento.metodo_pagamento }}" required>
+    </div>
+    <button type="submit" class="btn btn-primary">Salvar Alterações</button>
+</form>
+
+<a href="{{ url_for('pagamento.listar_pagamentos') }}" class="btn btn-secondary mt-3">Voltar</a>
+{% endblock %}

@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+
+{% block title %}Listar Pagamentos{% endblock %}
+
+{% block content %}
+<h2>Listar Pagamentos</h2>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Pedido</th>
+            <th>Valor</th>
+            <th>Método de Pagamento</th>
+            <th>Ações</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for pagamento in pagamentos %}
+        <tr>
+            <td>{{ pagamento.pagamento_id }}</td>
+            <td>{{ pagamento.pedido_id }}</td>
+            <td>{{ pagamento.valor }}</td>
+            <td>{{ pagamento.metodo_pagamento }}</td>
+            <td>
+                <a href="{{ url_for('pagamento.editar_pagamento', id=pagamento.pagamento_id) }}" class="btn btn-warning btn-sm">Editar</a>
+
+                <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#confirmDeleteModal{{ pagamento.pagamento_id }}">
+                    Excluir
+                </button>
+
+                <div class="modal fade" id="confirmDeleteModal{{ pagamento.pagamento_id }}" tabindex="-1" aria-labelledby="confirmDeleteModalLabel{{ pagamento.pagamento_id }}" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="confirmDeleteModalLabel{{ pagamento.pagamento_id }}">Confirmar Exclusão</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                Tem certeza que deseja excluir o pagamento de R${{ pagamento.valor }}?
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                <form action="{{ url_for('pagamento.excluir_pagamento', id=pagamento.pagamento_id) }}" method="POST" class="d-inline">
+                                    <button type="submit" class="btn btn-danger">Excluir</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<a href="{{ url_for('pagamento.novo_pagamento') }}" class="btn btn-primary">Novo Pagamento</a>
+{% endblock %}

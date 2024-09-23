@@ -1,36 +1,38 @@
 from flask import Flask, render_template
-from models import db  # Certifique-se de importar o `db` corretamente
-from models.Produto import Produto
-from models.Categoria import Categoria
-from models.Cliente import Cliente
-from models.Pedido import Pedido
-from config import Config
-from controllers.produto_controller import produto_bp
 from controllers.categoria_controller import categoria_bp
+from controllers.produto_controller import produto_bp
 from controllers.cliente_controller import cliente_bp
 from controllers.pedido_controller import pedido_bp
-import os
+from controllers.pagamento_controller import pagamento_bp
+from controllers.carrinho_controller import carrinho_bp
+from controllers.avaliacao_controller import avaliacao_bp
+from models import db
+import config
 
 app = Flask(__name__)
-app.config.from_object(Config)
 
-# Inicializa o banco de dados com a instância do aplicativo Flask
+# Configurações da aplicação (importando do config.py)
+app.config.from_object(config.Config)
+
+# Inicializando o banco de dados com SQLAlchemy
 db.init_app(app)
 
-# Cria o banco de dados e as tabelas se não existirem
-with app.app_context():
-    db.create_all()  # Cria as tabelas automaticamente se não existirem
+# Registro de blueprints
+app.register_blueprint(categoria_bp, url_prefix='/')
+app.register_blueprint(produto_bp, url_prefix='/')
+app.register_blueprint(cliente_bp, url_prefix='/')
+app.register_blueprint(pedido_bp, url_prefix='/')
+app.register_blueprint(pagamento_bp, url_prefix='/')  # Blueprint de pagamentos
+app.register_blueprint(carrinho_bp, url_prefix='/')   # Blueprint de carrinhos
+app.register_blueprint(avaliacao_bp, url_prefix='/')  # Blueprint de avaliações
 
-# Registra os blueprints
-app.register_blueprint(produto_bp)
-app.register_blueprint(categoria_bp)
-app.register_blueprint(cliente_bp)
-app.register_blueprint(pedido_bp)
-
-# Rota principal que renderiza um template HTML
+# Página inicial
 @app.route('/')
 def index():
-    return render_template('index.html')  # Renderiza o template index.html
+    return render_template('index.html')
 
+# Executar a aplicação
 if __name__ == '__main__':
+    with app.app_context():
+        db.create_all()  # Cria as tabelas no banco de dados, se não existirem
     app.run(debug=True)
